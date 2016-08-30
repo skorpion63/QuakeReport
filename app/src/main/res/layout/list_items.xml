@@ -26,6 +26,14 @@
         android:layout_weight="2"
         android:text="30/8/2016"
         android:paddingLeft="16dp"
+        android:id="@+id/date"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="22:12 Am"
+        android:paddingLeft="16dp"
         android:id="@+id/tim"/>
 
 </LinearLayout>
