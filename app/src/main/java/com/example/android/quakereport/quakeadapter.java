@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,14 +34,19 @@ public class quakeadapter extends ArrayAdapter<Earthquakes> {
                     R.layout.list_items, parent, false);
         }
 
-
+        //Get the current object in the array.
         Earthquakes currentQuake = getItem(position);
 
+
+        //Set the magnitude of the earthquake.
         TextView magnitude = (TextView) listItemView.findViewById(R.id.magnitude);
-        magnitude.setText(currentQuake.getmMagnitude());
+        DecimalFormat formatter = new DecimalFormat("0.0");
+        String magn = formatter.format(currentQuake.getmMagnitude());
+        magnitude.setText(magn);
 
+
+        //Set the location field in the listView.
         TextView place = (TextView) listItemView.findViewById(R.id.place);
-
         TextView place2 = (TextView) listItemView.findViewById(R.id.place2);
 
         String locale = currentQuake.getmPlace();
@@ -57,6 +63,7 @@ public class quakeadapter extends ArrayAdapter<Earthquakes> {
         place.setText(part1);
         place2.setText(part2);
 
+        //Set the date and time of the earthquake.
         TextView date = (TextView) listItemView.findViewById(R.id.date);
 
         Date ddd = new Date(currentQuake.getmDate());
