@@ -40,20 +40,25 @@ public class quakeadapter extends ArrayAdapter<Earthquakes> {
         magnitude.setText(currentQuake.getmMagnitude());
 
         TextView place = (TextView) listItemView.findViewById(R.id.place);
+
         TextView place2 = (TextView) listItemView.findViewById(R.id.place2);
+
         String locale = currentQuake.getmPlace();
+
         if (locale.contains("of")) {
             String[] parts = locale.split("(?<=of)");
             part1 = parts[0];
             part2 = parts[1];
         } else {
-            part1 = "Near the";
+            part1 = getContext().getString(R.string.near_the);
             part2 = locale;
         }
+
         place.setText(part1);
         place2.setText(part2);
 
         TextView date = (TextView) listItemView.findViewById(R.id.date);
+
         Date ddd = new Date(currentQuake.getmDate());
         SimpleDateFormat sdf = new SimpleDateFormat("LLL.dd.yyyy");
         String formattedDate = sdf.format(ddd);
