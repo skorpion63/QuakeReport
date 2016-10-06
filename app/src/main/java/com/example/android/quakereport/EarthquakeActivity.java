@@ -15,9 +15,10 @@
  */
 package com.example.android.quakereport;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,10 +27,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class EarthquakeActivity extends AppCompatActivity {
+public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Earthquakes>> {
 
     /** URL for earthquake data from the USGS dataset */
-    private static final String USGS_REQUEST_URL = " http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
+    public static final String USGS_REQUEST_URL = " http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
 
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
@@ -39,8 +40,9 @@ public class EarthquakeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
-        getQuakes task = new getQuakes();
-        task.execute(USGS_REQUEST_URL);
+      //  getQuakes task = new getQuakes();
+      //  task.execute(USGS_REQUEST_URL);
+        getLoaderManager().initLoader(0, null, this);
 
     }
 
@@ -65,7 +67,7 @@ public class EarthquakeActivity extends AppCompatActivity {
             }
         });
     }
-    private class getQuakes extends AsyncTask<String, Void, ArrayList<Earthquakes>>{
+  /**  private class getQuakes extends AsyncTask<String, Void, ArrayList<Earthquakes>>{
 
         @Override
         protected ArrayList<Earthquakes> doInBackground(String... urls) {
@@ -80,5 +82,23 @@ public class EarthquakeActivity extends AppCompatActivity {
         }
 
 
+    } */
+
+    @Override
+    public Loader<ArrayList<Earthquakes>> onCreateLoader(int i, Bundle bundle) {
+        // TODO: Create a new loader for the given URL
+        return new EarthquakeLoader(this, USGS_REQUEST_URL);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Earthquakes>> loader, ArrayList<Earthquakes> earthquakes) {
+        // TODO: Update the UI with the result
+        updateUi(earthquakes);
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Earthquakes>> loader) {
+        // TODO: Loader reset, so we can clear out our existing data.
     }
 }
